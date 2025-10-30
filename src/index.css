@@ -1,0 +1,13 @@
+*{
+   font-family: "Libertinus Serif", serif;
+   
+}
+.banner{
+   background-image: url('https://static.vecteezy.com/system/resources/previews/053/103/398/non_2x/a-3d-realistic-banner-for-makeup-products-like-lipstick-mascara-brush-eyeliner-foundation-cream-with-reflection-elegant-design-in-black-gold-tones-with-bokeh-perfect-for-cosmetic-ads-not-ai-free-vector.jpg');
+   height: 700px;
+   background-position: center;
+}
+.banner1{
+   background-image: url('https://traqq.com/blog/wp-content/uploads/2020/04/qwer_edited-1024x473.jpg');
+   height: 600px;
+}
