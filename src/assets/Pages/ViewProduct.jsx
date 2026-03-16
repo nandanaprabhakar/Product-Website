@@ -1,52 +1,63 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom'
+import { Button, Col, Row } from 'react-bootstrap'
+import { Link, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addToWishlist } from '../../redux/slices/wishlistSlice'
+function Viewproducts() {
 
-function ViewProduct() {
-  //1. Get product id from the url
-  const{id}=useParams()
-  
+//1 get products id from the url
+  const {id} = useParams()
+  console.log(id); //params = {id: '13'}
 
-  console.log(id);//params={id:'13'}
-  //5.create a stete for holding products
-  const [product,setProducts]=useState({})
-  //2. Define url
-    const baseUrl = `https://dummyjson.com/products/${id}`
-    //3.define a function fetch data from the url
-    const getData=async ()=>{
-      const response=await fetch(baseUrl)
-      console.log(response);
-      const productData=await response.json()
-      console.log(productData); //product data as object
-      setProducts(productData)
-    }
-    //4.call the API function
-    useEffect(()=>{
-      getData()
-    })
+
+  const dispatch=useDispatch()
+
+
+  //2 define url
+const baseUrl = `https://dummyjson.com/products/${id}`
+
+//5 create a state for holding products
+const [products,setProducts]= useState({})
+
+//3 define a function fetch data from the url
+const getData =async ()=>{
+   const response = await fetch(baseUrl)
+   console.log(response);
+   const productData=await response.json()
+   console.log(productData); //product data as object
+   setProducts(productData)
+   
+}
+
+//4 call the api function
+useEffect(()=>{
+  getData()
+},[])
+
+
+
   return (
     <div>
-      <Row className='p-5 text-center bg-dark text-white'>
-        <Col className='mt-5'>
-        <img src={product.thumbnail} alt="" />
-        </Col>
-        <Col className='mt-5'>
-        <h1>{product.title}</h1>
-        <h1>{product.price}</h1>
-        <p>{product.description}</p>
-       
-        <Row style={{width:'400px',marginLeft:'140px'}}>
+        <Row>
           <Col>
-             <Button style={{backgroundColor:'black',border:'black'}}>Add to Card</Button>
-        </Col>
-       <Col>
-             <Button style={{backgroundColor:'black',border:'black'}}>Add to Card</Button>
-        </Col>
+   <img src={products.thumbnail} alt="" />
+          </Col>
+           <Col className='p-5 text-center'>
+              <h1>{products.title}</h1>
+              <h2>{products.price}</h2>
+              <p>{products.description}</p>
+              <Row>
+                <Col><Button>Add To Cart</Button></Col>
+                <Col>
+                <Link to={'/wishlist'}>
+              <Button onClick={()=>dispatch(addToWishlist(products))} style={{backgroundColor:'black',border:'black'}}>Add to Wishlist</Button>
+                </Link>
+                </Col>
+              </Row>
+          </Col>
         </Row>
-         </Col>
-      </Row>
     </div>
   )
 }
 
-export default ViewProduct
+export default Viewproducts
